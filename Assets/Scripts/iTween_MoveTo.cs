@@ -3,60 +3,58 @@ using System.Collections;
 
 public class iTween_MoveTo : MonoBehaviour {
 	
-	public GameObject cube;
 	private int x,y,z;
 	private Vector3 initialPos;
 	
-	public GameObject Lazer;
+	// Create GameObject holder for Bullets, assign Cube_Lazer on the Inspector
+	public GameObject Bullet;	
+	private Vector3 cubePos;
 	
-	private Vector3 newPos;
 	
 	// Use this for initialization
-	void Start () {
-		cube = GameObject.Find("Cube_green");
+	void Start ()
+	{
 		initialPos = transform.position;
-		newPos = initialPos;
+		cubePos = initialPos;
 		x = (int)initialPos.x;
 		y = (int)initialPos.y;
 		z = (int)initialPos.z;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+	{		
 		CubePosition();
 		ShootAction ();
 	}
 	
 	// Cube Left - Right
-	void CubePosition () {	
-		
-		if(Input.GetKey(KeyCode.RightArrow)){
+	void CubePosition ()
+	{			
+		if(Input.GetKey(KeyCode.RightArrow))
+		{
 			x++;
 		}		
-		else if(Input.GetKey(KeyCode.LeftArrow)){
+		else if(Input.GetKey(KeyCode.LeftArrow))
+		{
 			x--;
 		}
 		
-		newPos = new Vector3(x, y, z);
-		cube.transform.position = newPos;
+		cubePos = new Vector3(x, y, z);
+		gameObject.transform.position = cubePos;
 	}
 	
+	
 	// Cube Shoots
-	void ShootAction () {
-		
-		//GameObject Lazers = GameObject.Find("Cube_lazer");
-		
-		if(Input.GetKeyDown(KeyCode.A)){
-			Vector3 newPosA = new Vector3(1,1,-3);
-			
-			if(Lazer != null){
-				Debug.Log("HI" + Lazer);			
-			}
-			else{
-				Debug.Log("NO LAZER");
-				Instantiate(Lazer, newPosA, Quaternion.identity);
-			}
+	void ShootAction ()
+	{				
+		if(Input.GetKeyDown(KeyCode.A))
+		{			
+			if(Bullet.activeSelf)
+				Debug.Log("ShootAction: " + Bullet);
+			// Create an instance of a GameObject of Bullet
+			else
+				Instantiate(Bullet, new Vector3(1,1,-3), Quaternion.identity);
 		}
 	}
 }
